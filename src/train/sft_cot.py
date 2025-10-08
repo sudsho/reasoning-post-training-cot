@@ -61,7 +61,7 @@ class ResponseOnlyCollator:
         input_ids, labels, attn = [], [], []
         for ex in features:
             prompt = ex["prompt"]
-            response = ex["response"]
+            response = _ensure_eos(ex["response"], self.tokenizer.eos_token or "")
             p_ids = self.tokenizer(prompt, add_special_tokens=False)["input_ids"]
             r_ids = self.tokenizer(response, add_special_tokens=False)["input_ids"]
             ids = (p_ids + r_ids)[: self.max_seq_len]
@@ -91,8 +91,17 @@ def build_dataset(train_file: str, eval_file: str | None):
     ds = {}
     ds["train"] = load_dataset("json", data_files=train_file, split="train")
     if eval_file and Path(eval_file).exists():
-        ds["eval"] = load_dataset("json", data_files=eval_file, split="train")
+        try:
+            ds["eval"] = load_dataset("json", data_files=eval_file, split="train")
+        except Exception as e:
+            print(f"warn: could not load eval file {eval_file}: {e}")
     return ds
+
+
+def _ensure_eos(response: str, eos: str) -> str:
+    if not response.endswith(eos):
+        return response + eos
+    return response
 
 
 def parse_args() -> argparse.Namespace:
