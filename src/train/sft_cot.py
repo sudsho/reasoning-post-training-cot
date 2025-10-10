@@ -108,6 +108,7 @@ def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser("sft_cot")
     ap.add_argument("--config", required=True)
     ap.add_argument("--override", nargs="*", default=[])
+    ap.add_argument("--resume-from-checkpoint", default=None)
     return ap.parse_args()
 
 
@@ -170,7 +171,7 @@ def main() -> None:
         data_collator=collator,
         tokenizer=tok,
     )
-    trainer.train()
+    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
     trainer.save_model(t_cfg["output_dir"])
     tok.save_pretrained(t_cfg["output_dir"])
 
