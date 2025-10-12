@@ -1,0 +1,45 @@
+# GRPO refinement stacked on the SFT checkpoint.
+# Verifiable rewards: correctness dominant, format + length shaping.
+
+model:
+  name_or_path: outputs/sft_cot_qwen2_5_1_5b
+  torch_dtype: bfloat16
+  attn_implementation: flash_attention_2
+
+data:
+  # This file must have {prompt, gold, task} columns.
+  # scripts/train_grpo.sh builds it from the distilled train.jsonl.
+  train_file: data/distilled/grpo_prompts.jsonl
+  prompt_field: prompt
+
+rewards:
+  - name: correctness
+    weight: 1.0
+  - name: format
+    weight: 0.2
+  - name: length_penalty
+    weight: 0.1
+    kwargs: {soft_max: 512, hard_max: 1024, min_reward: -0.5}
+  - name: answer_present
+    weight: 0.05
+
+train:
+  output_dir: outputs/grpo_qwen2_5_1_5b
+  num_train_epochs: 1
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 5.0e-7
+  num_generations: 8
+  max_prompt_length: 1024
+  max_completion_length: 1024
+  beta: 0.04
+  temperature: 0.9
+  top_p: 0.95
+  logging_steps: 5
+  save_steps: 200
+  bf16: true
+  gradient_checkpointing: true
+  seed: 17
+  report_to: wandb
+  run_name: grpo_qwen2_5_1_5b_v1
+  use_vllm: true
