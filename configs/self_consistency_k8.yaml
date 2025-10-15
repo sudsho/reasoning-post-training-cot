@@ -1,0 +1,25 @@
+# Self-consistency eval config.
+# K=8 is the sweet spot on our ablation (see docs/self_consistency_notes.md).
+
+model:
+  endpoint: http://localhost:8000/v1
+  name: outputs/grpo_qwen2_5_1_5b
+
+sampling:
+  k: 8
+  temperature: 0.9
+  top_p: 0.95
+  max_tokens: 1024
+  stop: ["\n\nProblem:", "<|im_end|>"]
+
+vote:
+  # majority for arc, weighted (uniform for now) for math
+  arc: majority
+  gsm8k: weighted
+  math: weighted
+
+# per-task limits during eval so a run stays under an hour
+limits:
+  arc: 1172
+  gsm8k: 1319
+  math: 500
