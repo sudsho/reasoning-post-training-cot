@@ -84,6 +84,18 @@ def weighted_vote(
     return VoteResult(winner, dist[winner], total, dict(dist))
 
 
+def logprob_weight(logprob_sum: float, length: int) -> float:
+    """Turn a completion's cumulative logprob into a soft weight.
+
+    Length normalization avoids letting the longest trace dominate the vote.
+    """
+    if length <= 0:
+        return 1.0
+    import math
+
+    return math.exp(logprob_sum / length)
+
+
 def sample_and_vote(
     prompt: str,
     generate_fn: Callable[[str, int], list[str]],
