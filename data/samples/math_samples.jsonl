@@ -1,0 +1,10 @@
+{"id":"math_0","question":"Find the sum of all positive integers less than 100 that are divisible by 3.","gold":"1683","trace":"<think>\n3 + 6 + ... + 99. n = 33 terms. Sum = 33 * (3 + 99) / 2 = 33 * 51 = 1683.\n</think>\nAnswer: 1683","answer":"1683","meta":{"task":"math"}}
+{"id":"math_1","question":"Solve for x: 2x + 5 = 17.","gold":"6","trace":"<think>\n2x = 12, so x = 6.\n</think>\nAnswer: 6","answer":"6","meta":{"task":"math"}}
+{"id":"math_2","question":"What is the area of a triangle with base 10 and height 6?","gold":"30","trace":"<think>\nArea = (1/2) * base * height = 0.5 * 10 * 6 = 30.\n</think>\nAnswer: 30","answer":"30","meta":{"task":"math"}}
+{"id":"math_3","question":"Compute 15% of 240.","gold":"36","trace":"<think>\n0.15 * 240 = 36.\n</think>\nAnswer: 36","answer":"36","meta":{"task":"math"}}
+{"id":"math_4","question":"Evaluate f(3) if f(x) = x^2 - 4x + 7.","gold":"4","trace":"<think>\n9 - 12 + 7 = 4.\n</think>\nAnswer: 4","answer":"4","meta":{"task":"math"}}
+{"id":"math_5","question":"How many diagonals does a convex heptagon have?","gold":"14","trace":"<think>\nDiagonals of n-gon = n(n-3)/2 = 7 * 4 / 2 = 14.\n</think>\nAnswer: 14","answer":"14","meta":{"task":"math"}}
+{"id":"math_6","question":"If log_2(x) = 5, what is x?","gold":"32","trace":"<think>\nx = 2^5 = 32.\n</think>\nAnswer: 32","answer":"32","meta":{"task":"math"}}
+{"id":"math_7","question":"Find the derivative of sin(x) * cos(x) at x = 0.","gold":"1","trace":"<think>\nd/dx sin(x)cos(x) = cos(2x). At x=0, cos(0) = 1.\n</think>\nAnswer: 1","answer":"1","meta":{"task":"math"}}
+{"id":"math_8","question":"What is the greatest common divisor of 48 and 180?","gold":"12","trace":"<think>\ngcd(48,180) via Euclid: 180 = 3*48 + 36; 48 = 1*36 + 12; 36 = 3*12 + 0. GCD = 12.\n</think>\nAnswer: 12","answer":"12","meta":{"task":"math"}}
+{"id":"math_9","question":"What is the probability of rolling two dice and getting a sum of 7?","gold":"1/6","trace":"<think>\nFavorable outcomes: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6. Total = 36. Probability = 6/36 = 1/6.\n</think>\nAnswer: 1/6","answer":"1/6","meta":{"task":"math"}}
