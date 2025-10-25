@@ -1,0 +1,42 @@
+services:
+  vllm:
+    build: .
+    image: reasoning-post-training-cot:latest
+    container_name: rpt-cot-vllm
+    ports:
+      - "8000:8000"
+    environment:
+      HF_HUB_ENABLE_HF_TRANSFER: "1"
+      HF_HOME: /root/.cache/huggingface
+    volumes:
+      - ./outputs:/app/outputs
+      - ./benchmarks:/app/benchmarks
+      - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: "16g"
+    ipc: host
+    restart: unless-stopped
+
+  eval:
+    image: reasoning-post-training-cot:latest
+    depends_on:
+      - vllm
+    environment:
+      ENDPOINT: http://vllm:8000/v1
+      MODEL: outputs/grpo_qwen2_5_1_5b
+      MODEL_TAG: grpo
+      K: "8"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./benchmarks:/app/benchmarks
+    command: bash scripts/eval_all.sh
+    profiles: ["eval"]
+
+volumes:
+  hf_cache: {}
