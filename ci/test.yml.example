@@ -1,0 +1,31 @@
+# Example CI. Move to .github/workflows/test.yml to activate.
+# (Kept as .example because portfolio push token lacks the workflow scope.)
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install (cpu-only, skip torch heavy)
+        run: |
+          python -m pip install --upgrade pip
+          # only install what tests actually import
+          pip install pyyaml pytest sympy math-verify tqdm datasets numpy pandas
+      - name: pytest
+        env:
+          PYTHONPATH: .
+        run: |
+          pytest -q tests/test_distill_filter.py \
+                    tests/test_reward_correctness.py \
+                    tests/test_reward_length_penalty.py \
+                    tests/test_self_consistency_vote.py \
+                    tests/test_eval_scorers.py
