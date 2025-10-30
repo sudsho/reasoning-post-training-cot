@@ -111,6 +111,13 @@ docker compose --profile eval up eval
 * K=8 at eval costs ~4.8x K=1 wall-time thanks to vLLM prefix caching
   (not 8x). See [`docs/cost_notes.md`](docs/cost_notes.md).
 
+## Related notes
+
+* [docs/method.md](docs/method.md) - pipeline and headline numbers
+* [docs/teacher_choice_notes.md](docs/teacher_choice_notes.md) - why Qwen2.5-32B
+* [docs/self_consistency_notes.md](docs/self_consistency_notes.md) - K sweep
+* [docs/cost_notes.md](docs/cost_notes.md) - GPU-hour breakdown
+
 ## License
 
 MIT.
