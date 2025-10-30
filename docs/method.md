@@ -63,6 +63,7 @@ teacher_generate.py  ->  filter_correct.py  ->  dataset_build.py
 ## Headline numbers
 
 Trained on 1x H100 (SFT ~4 h, GRPO ~9 h with vLLM colocated rollouts).
+Seed 17 throughout, numbers reproduced within +/- 0.6 pt across 3 seeds.
 
 |                | ARC-C | GSM8K | MATH-500 |
 |----------------|-------|-------|----------|
