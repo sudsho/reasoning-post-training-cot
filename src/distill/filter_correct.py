@@ -29,12 +29,14 @@ def extract_answer(trace: str) -> str | None:
     return m.group(1).strip()
 
 
+_LETTER_RE = re.compile(r"\b([A-E])\b")
+
+
 def _norm_letter(s: str) -> str | None:
-    s = s.strip().upper()
-    for ch in s:
-        if ch in {"A", "B", "C", "D", "E"}:
-            return ch
-    return None
+    # Pull out a standalone choice letter (A-E), not a letter that merely
+    # happens to sit inside a word ("the" must not normalize to "E").
+    m = _LETTER_RE.search(s.upper())
+    return m.group(1) if m else None
 
 
 def _norm_math(s: str) -> str:

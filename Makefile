@@ -1,4 +1,4 @@
-.PHONY: install test lint distill sft grpo serve eval sc-ablation clean
+.PHONY: install test lint smoke distill sft grpo serve eval sc-ablation clean
 
 PY ?= python
 K  ?= 8
@@ -9,6 +9,11 @@ install:
 
 test:
 	$(PY) -m pytest -q
+
+# Tiny-CPU offline smoke: data + eval + reward + self-consistency + SFT + GRPO
+# plumbing on a toy LM. No GPU, no download, no vLLM.
+smoke:
+	$(PY) -m src.smoke_cpu
 
 lint:
 	$(PY) -m ruff check src tests || true
